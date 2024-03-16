@@ -3,7 +3,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.preprocessing import MinMaxScaler
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
-from user_playlist_integration import  spotify_auth, create_album_outputs,create_playlist_outputs , generate_playlist_feature , generate_playlist_recommendations
+from user_playlist_integration import  spotify_auth, create_album_outputs,create_playlist_outputs , generate_playlist_feature , generate_playlist_recommendations, create_playlist_outputs_by_link
 from oheprep import OHE, create_feature_set
 from visualizing import visualize_songs,visualize_songs_with_trackpre
 import matplotlib.pyplot as plt
@@ -42,9 +42,10 @@ complete_set.head()
 print(complete_set.columns)
 
 user_playlists = sp.current_user_playlists()
-# for playlist in user_playlists['items']:
-#     print(playlist['name'])
-#     photo = sp.playlist_cover_image(playlist['id'])
+
+for playlist in user_playlists['items']:
+    print(playlist['name'])
+    # photo = sp.playlist_cover_image(playlist['id'])
 #     print(photo)
 
 # getting songs from kaggle dataset
@@ -52,19 +53,25 @@ user_playlists = sp.current_user_playlists()
 playlist_id_name = {}
 playlist_photo = {}
 
-for i in sp.current_user_playlists()['items']:
-    playlist_id_name[i['name']] = i['uri'].split(':')[2]
-    playlist_photo[i['uri'].split(':')[2]] = i['images'][0]['url']
+# for i in sp.current_user_playlists()['items']:
+#     playlist_id_name[i['name']] = i['uri'].split(':')[2]
+#     playlist_photo[i['uri'].split(':')[2]] = i['images'][0]['url']
 
 # print(playlist_id_name)
-# print(playlist_id_name['Hozzzzzy'])
+    # print(playlist_id_name['Black'])
+    # exit()
 # checking = sp.playlist(playlist_id_name['Hozzzzzy'])['tracks']['items']
 # print(checking)
-    """
+"""
     playlist and albums don't work the same!
-    """
+"""
 
-playlist_with_kaggle = create_playlist_outputs('Hozzzzzy', playlist_id_name, spotify_data, sp)
+"""
+    This is if the user wants to pull by name, but if this doesn't work, we can pull by link
+"""
+# playlist_with_kaggle = create_playlist_outputs('Hozzzzzy', playlist_id_name, spotify_data, sp)
+
+playlist_with_kaggle = create_playlist_outputs_by_link('https://open.spotify.com/playlist/3rq6CQM7q1nDf97axF4qSx?si=aN5t1HY0SmCQbQg_4oPBkA&pi=a-0W87Ert7RkOF', spotify_data, sp)
 
 # print(playlist_with_kaggle.url)
 # playlist_plot  = visualize_songs(playlist_with_kaggle)

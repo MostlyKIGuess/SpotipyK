@@ -98,6 +98,68 @@ def create_playlist_outputs(playlist_name, id_dic, df, sp):
     return playlist
 
 
+def create_playlist_outputs_by_id(playlist_id, df, sp):
+    """
+    Pull songs from a specific playlist.
+
+    Parameters:
+        playlist_id (str): ID of the playlist you'd like to pull from the spotify API
+        df (pandas dataframe): spotify dataframe
+        sp: spotify object
+
+    Returns:
+        playlist: all songs in the playlist THAT ARE AVAILABLE IN THE PROVIDED DATASET
+    """
+
+    #generate playlist dataframe
+    playlist = pd.DataFrame()
+
+    for ix, i in enumerate(sp.playlist(playlist_id)['tracks']['items']):
+        playlist.loc[ix, 'artist'] = i['track']['artists'][0]['name']
+        playlist.loc[ix, 'name'] = i['track']['name']
+        playlist.loc[ix, 'id'] = i['track']['id']
+        playlist.loc[ix, 'url'] = i['track']['album']['images'][1]['url']
+        playlist.loc[ix, 'date_added'] = i['added_at']
+
+    playlist['date_added'] = pd.to_datetime(playlist['date_added'])
+
+    playlist = playlist[playlist['id'].isin(df['track_id'].values)].sort_values('date_added',ascending = False)
+
+    return playlist
+
+def create_playlist_outputs_by_link(playlist_link, df, sp):
+    """
+    Pull songs from a specific playlist.
+
+    Parameters:
+        playlist_link (str): Spotify link of the playlist you'd like to pull from the spotify API
+        df (pandas dataframe): spotify dataframe
+        sp: spotify object
+
+    Returns:
+        playlist: all songs in the playlist THAT ARE AVAILABLE IN THE PROVIDED DATASET
+    """
+
+    # Extract playlist id from the link
+    playlist_id = playlist_link.split('/')[-1].split('?')[0]
+
+    # Generate playlist dataframe
+    playlist = pd.DataFrame()
+
+    for ix, i in enumerate(sp.playlist(playlist_id)['tracks']['items']):
+        playlist.loc[ix, 'artist'] = i['track']['artists'][0]['name']
+        playlist.loc[ix, 'name'] = i['track']['name']
+        playlist.loc[ix, 'id'] = i['track']['id']
+        playlist.loc[ix, 'url'] = i['track']['album']['images'][1]['url']
+        playlist.loc[ix, 'date_added'] = i['added_at']
+
+    playlist['date_added'] = pd.to_datetime(playlist['date_added'])
+
+    playlist = playlist[playlist['id'].isin(df['track_id'].values)].sort_values('date_added',ascending = False)
+
+    return playlist
+
+
 def generate_playlist_feature(complete_feature_set, playlist_df, weight_factor):
     """
     Summarize a user's playlist into a single vector
