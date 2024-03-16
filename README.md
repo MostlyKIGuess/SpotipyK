@@ -5,7 +5,7 @@ This project uses the Spotify API to analyze a user's music listening habits.
 ## Project Structure
 
 - `auth_model/`: ~~
-- `Dataset/dataset.csv`: This is the dataset used for the project. Will be adding more
+- `Dataset/dataset.csv`: This is the dataset used for the project. Here's a link to it's kaggle https://www.kaggle.com/datasets/maharshipandya/-spotify-tracks-dataset/data, Will be adding more altho
 - `graphingtables/tables.py`: This generates a panda table with the audio features. Like the one showed in the dataframe.png.
 - `meaning.md`: This explains every factor from dataframe.png .
 - `photogrid/photogrid.py`: This script generates a 3x3 grid of album covers from the user's top tracks. The grid is saved as 'recentlyplayed.jpg'.

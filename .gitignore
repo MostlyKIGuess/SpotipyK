@@ -1,1 +1,4 @@
 testingout/
+.env
+
+recommendation_model/.env
