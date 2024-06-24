@@ -81,30 +81,30 @@ Pulls songs from a specific album on Spotify and returns those available in the 
 
 Pulls songs from a specific playlist on Spotify and returns those available in the provided dataset.
 
-- **Parameters:**
+ **Parameters:**
 - `playlist_name` (str): Name of the playlist to pull songs from.
 - `id_dic` (dict): Dictionary mapping playlist names to playlist IDs.
 - `df` (pandas DataFrame): Spotify dataset.
 - `sp`: Spotify object authenticated with `spotify_auth()`.
 
-- **Returns:**
+ **Returns:**
 - `playlist` (pandas DataFrame): DataFrame containing songs from the specified playlist available in the provided dataset.
 
 ### `create_playlist_outputs_by_id(playlist_id, df, sp)`
 
 Pulls songs from a specific playlist on Spotify using its ID and returns those available in the provided dataset.
 
-- **Parameters:**
+ **Parameters:**
 - `playlist_id` (str): ID of the playlist to pull songs from.
 - `df` (pandas DataFrame): Spotify dataset.
 - `sp`: Spotify object authenticated with `spotify_auth()`.
 
-- **Returns:**
+ **Returns:**
 - `playlist` (pandas DataFrame): DataFrame containing songs from the specified playlist available in the provided dataset.
 
 #### Playlist IDs can be obtained either by copying the last part of a playlist link as shown below, or by utilising the Spotipy Module. Below is a snippet to obtain a user's plalist and retrieve the ID's of each of them. 
 
-```
+```python
 from SpotipyK.recommendation_model.user_playlist_integration import spotify_data,spotify_auth,
 #initialising spotify object
 sp = spotify_auth()
@@ -119,16 +119,16 @@ for playlist in user_playlists['items']:
 
 Pulls songs from a specific playlist on Spotify using its link and returns those available in the provided dataset.
 
-- **Parameters:**
+ **Parameters:**
 - `playlist_link` (str): Spotify link of the playlist to pull songs from.
 - `df` (pandas DataFrame): Spotify dataset.
 - `sp`: Spotify object authenticated with `spotify_auth()`.
 
-- **Returns:**
+ **Returns:**
 - `playlist` (pandas DataFrame): DataFrame containing songs from the specified playlist available in the provided dataset.
 
 ### Example 
-```
+```python
 from SpotipyK.recommendation_model.user_playlist_integration import spotify_data,spotify_auth,create_playlist_outputs_by_link
 import pandas as pd
 
@@ -151,18 +151,18 @@ print(playlist.head())
 
 Summarizes a user's playlist into a single vector and returns the summarized playlist and non playlist features.
 
-- **Parameters:**
+ **Parameters:**
 - `complete_feature_set` (pandas DataFrame): DataFrame including all features for Spotify songs.
 - `playlist_df` (pandas DataFrame): DataFrame of songs in the playlist.
 - `weight_factor` (float): Float value representing the recency bias (closer to 1 gives more priority to recent songs).
 
-- **Returns:**
+ **Returns:**
 - `playlist_feature_set_weighted_final` (pandas Series): Summarized feature vector representing the playlist.
 - `complete_feature_set_nonplaylist` (pandas DataFrame): DataFrame of songs that are not in the selected playlist.
 
 #### To generate feture set after getting the playlist (you can continue the code from the playlist link example)
 
-```
+```python
 
 #preprocessing the dataset 
 df['consolidates_genre_lists'] = df['track_genre'].apply(lambda x: x.split("|"))
@@ -186,18 +186,18 @@ print(non_playlist.head())
 
 Generates and returns top 10 recommendations for a playlist based on cosine similarity.
 
-- **Parameters:**
+ **Parameters:**
 - `df` (pandas DataFrame): Spotify dataset.
 - `features` (pandas Series): Summarized playlist feature vector.
 - `nonplaylist_features` (pandas DataFrame): Feature set of songs that are not in the selected playlist.
 - `sp`: Spotify object authenticated with `spotify_auth()`.
 
-- **Returns:**
+ **Returns:**
 - `non_playlist_df_top_10` (pandas DataFrame): DataFrame containing top 10 recommendations for the playlist.
 
 #### To generate recommendations using the featureset obtained previously, 
 
-```
+```python
 recommendation_for_playlist = generate_playlist_recommendations(df,playlist_weighted, non_playlist,sp)
 print(recommendation_for_playlist.head())
 
@@ -213,7 +213,7 @@ Visualizes song cover art alongside track names from a given pandas DataFrame (`
 **Returns:**
 - `plt` (matplotlib.pyplot object): Matplotlib figure object displaying the cover arts with track names.
 
-```
+```python
 
 #import function from SpotipyK.recommendation_model.visualizing
 #use
