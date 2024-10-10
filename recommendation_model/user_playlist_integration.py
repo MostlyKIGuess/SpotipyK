@@ -2,7 +2,16 @@ import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 import pandas as pd
 from sklearn.metrics.pairwise import cosine_similarity
+from dotenv import load_dotenv
+import os
 
+if load_dotenv():
+    print("Environment variables loaded successfully.")
+else:
+    print("Could not load environment variables.")
+
+client_id = os.getenv('SPOTIFY_CLIENT_ID')
+client_secret = os.getenv('SPOTIFY_CLIENT_SECRET')
 
 
 def spotify_data():
@@ -24,8 +33,8 @@ def spotify_auth():
         sp: spotify object
     """
 
-    sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id='woho',
-                                                  client_secret='lol',
+    sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=client_id,
+                                                  client_secret=client_secret,
                                                   redirect_uri='http://localhost:5089/',
                                                   scope='user-library-read user-top-read user-read-recently-played playlist-read-private'))
     return sp

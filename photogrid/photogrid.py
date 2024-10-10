@@ -4,9 +4,20 @@ import sys
 import requests
 from PIL import Image
 import io
+import os
+from dotenv import load_dotenv
 
-sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id='yourclientid',
-                                                client_secret='yourclientsecret',
+if load_dotenv():
+    print("Environment variables loaded successfully.")
+else:
+    print("Could not load environment variables.")
+
+client_id = os.getenv('SPOTIFY_CLIENT_ID')
+client_secret = os.getenv('SPOTIFY_CLIENT_SECRET')
+
+
+sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=client_id,
+                                                client_secret=client_secret,
                                                 redirect_uri='http://localhost:5089/',
                                                 scope='user-top-read user-read-recently-played',
                                      show_dialog=True))

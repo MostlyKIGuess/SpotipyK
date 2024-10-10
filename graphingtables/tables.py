@@ -6,10 +6,20 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 import dataframe_image as dfi
 from collections import defaultdict
+import os
+from dotenv import load_dotenv
+
+if load_dotenv():
+    print("Environment variables loaded successfully.")
+else:
+    print("Could not load environment variables.")
+
+client_id = os.getenv('SPOTIFY_CLIENT_ID')
+client_secret = os.getenv('SPOTIFY_CLIENT_SECRET')
 
 # spotify auth
-sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id='yourclientid',
-                                                client_secret='yourclientsecret',
+sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=client_id,
+                                                client_secret=client_secret,
                                                 redirect_uri='http://localhost:5089/',
                                                 scope='user-library-read user-top-read user-read-recently-played playlist-read-private'))
 #user data
