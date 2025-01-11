@@ -56,8 +56,6 @@ def create_album_outputs(album_name, id_dic, df,sp):
 
     #generate album dataframe
     album = pd.DataFrame()
-    album_name = album_name
-
     for ix, i in enumerate(sp.album(id_dic[album_name])['tracks']['items']):
         album.loc[ix, 'artist'] = i['artists'][0]['name']
         album.loc[ix, 'name'] = i['name']
@@ -88,8 +86,6 @@ def create_playlist_outputs(playlist_name, id_dic, df, sp):
 
     #generate playlist dataframe
     playlist = pd.DataFrame()
-    playlist_name = playlist_name
-
     for ix, i in enumerate(sp.playlist(id_dic[playlist_name])['tracks']['items']):
         playlist.loc[ix, 'artist'] = i['track']['artists'][0]['name']
         playlist.loc[ix, 'name'] = i['track']['name']
